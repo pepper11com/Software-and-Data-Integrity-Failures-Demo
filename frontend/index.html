@@ -10,21 +10,38 @@
 
 
 <h2>Vulnerable Deserialization Demo</h2>
-<p>Enter Base64-encoded serialized object:</p>
-<label for="serializedInput">text</label><textarea id="serializedInput" rows="4" cols="50"></textarea><br>
-<button onclick="sendData()">Deserialize Object</button>
+<p>Enter Safe Base64-encoded serialized object:</p>
+<label for="serializedInput"></label><textarea id="serializedInput" rows="5" cols="100"></textarea><br>
+<button onclick="sendSafeData()">Deserialize Object</button>
 
+<p>Enter Malicious Base64-encoded serialized object:</p>
+<label for="serializedInput"></label><textarea id="serializedInput" rows="5" cols="100"></textarea><br>
+<button onclick="sendMaliciousData()">Deserialize Object</button>
 
 <script>
 
-  function sendData() {
+  function sendSafeData() {
+    const serializedData = document.getElementById('serializedInput').value;
+    fetch('http://localhost:8080/safe/deserialize', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: serializedData
+    })
+      .then(response => response.text())
+      .then(data => alert(data))
+      .catch(error => console.error('Error:', error));
+  }
+
+  function sendMaliciousData() {
     const serializedData = document.getElementById('serializedInput').value;
     fetch('http://localhost:8080/vulnerable/deserialize', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(serializedData)
+      body: serializedData
     })
       .then(response => response.text())
       .then(data => alert(data))
