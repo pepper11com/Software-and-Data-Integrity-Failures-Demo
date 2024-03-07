@@ -8,7 +8,6 @@ import java.io.Serializable;
 public class SimpleObject implements Serializable {
     private String message;
 
-
     public SimpleObject(String message) {
         this.message = message;
     }
@@ -16,6 +15,7 @@ public class SimpleObject implements Serializable {
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException
     {
         // implementation
+        in.defaultReadObject();
         System.out.println("[SimpleObject] readObject called");
     }
 

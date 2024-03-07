@@ -21,18 +21,24 @@ import java.util.Map;
 public class ServerApplication {
 
 	public static void main(String[] args) throws IOException {
-		HackObject obj = new HackObject();
+		HackObject hackObj = new HackObject();
+		SimpleObject simpleObj = new SimpleObject("Hello, this is a simple message");
 
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ObjectOutputStream out = new ObjectOutputStream(baos);
-		out.writeObject(obj);
-		out.close();
-		String base64Encoded = Base64.getEncoder().encodeToString(baos.toByteArray());
-		System.out.println(base64Encoded);
+		String hackBase64 = getBase64ForObject(hackObj);
+		String simpleBase64 = getBase64ForObject(simpleObj);
 
+		System.out.println("HackObject base64: " + hackBase64);
+		System.out.println("SimpleObject base64: " + simpleBase64);
 
 
 		SpringApplication.run(ServerApplication.class, args);
 	}
 
+	private static String getBase64ForObject(Object obj) throws IOException {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ObjectOutputStream out = new ObjectOutputStream(baos);
+		out.writeObject(obj);
+		out.close();
+        return Base64.getEncoder().encodeToString(baos.toByteArray());
+	}
 }

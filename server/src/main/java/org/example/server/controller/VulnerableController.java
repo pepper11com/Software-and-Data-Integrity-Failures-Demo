@@ -21,8 +21,8 @@ public class VulnerableController {
 
             try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(data))) {
                 SimpleObject obj = (SimpleObject)ois.readObject();
-
-                return "Deserialized object: " + (obj).getMessage();
+                System.out.println(obj);
+                return "Deserialized object: " + obj.getMessage();
             }
         } catch (Exception e) {
             return "Deserialization failed: " + e.getMessage();
