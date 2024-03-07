@@ -11,17 +11,17 @@
 
 <h2>Vulnerable Deserialization Demo</h2>
 <p>Enter Safe Base64-encoded serialized object:</p>
-<label for="serializedInput"></label><textarea id="serializedInput" rows="5" cols="100"></textarea><br>
+<textarea id="serializedSafeInput" rows="5" cols="100"></textarea><br>
 <button onclick="sendSafeData()">Deserialize Object</button>
 
 <p>Enter Malicious Base64-encoded serialized object:</p>
-<label for="serializedInput"></label><textarea id="serializedInput" rows="5" cols="100"></textarea><br>
+<textarea id="serializedMaliciousInput" rows="5" cols="100"></textarea><br>
 <button onclick="sendMaliciousData()">Deserialize Object</button>
 
 <script>
 
   function sendSafeData() {
-    const serializedData = document.getElementById('serializedInput').value;
+    const serializedData = document.getElementById('serializedSafeInput').value;
     fetch('http://localhost:8080/safe/deserialize', {
       method: 'POST',
       headers: {
@@ -35,7 +35,7 @@
   }
 
   function sendMaliciousData() {
-    const serializedData = document.getElementById('serializedInput').value;
+    const serializedData = document.getElementById('serializedMaliciousInput').value;
     fetch('http://localhost:8080/vulnerable/deserialize', {
       method: 'POST',
       headers: {
