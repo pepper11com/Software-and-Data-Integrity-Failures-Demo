@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vulnerable Deserialization Demo</title>
+</head>
+
+
+<body>
+
+
+<h2>Vulnerable Deserialization Demo</h2>
+<p>Enter Base64-encoded serialized object:</p>
+<label for="serializedInput">text</label><textarea id="serializedInput" rows="4" cols="50"></textarea><br>
+<button onclick="sendData()">Deserialize Object</button>
+
+
+<script>
+
+  function sendData() {
+    const serializedData = document.getElementById('serializedInput').value;
+    fetch('http://localhost:8080/vulnerable/deserialize', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(serializedData)
+    })
+      .then(response => response.text())
+      .then(data => alert(data))
+      .catch(error => console.error('Error:', error));
+  }
+
+</script>
+
+
+
+</body>
+</html>
